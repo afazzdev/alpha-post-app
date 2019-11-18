@@ -1,11 +1,29 @@
 import React from "react";
 import Routes from "./routes/routes";
 
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { Reducers } from "./redux/reducers";
+
+const Store = createStore(
+  Reducers,
+  {},
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : f => f
+  )
+);
+
 function App() {
   return (
-    <React.Fragment>
-      <Routes />
-    </React.Fragment>
+    <div className="App">
+      <Provider store={Store}>
+        <Routes />
+      </Provider>
+    </div>
   );
 }
 
